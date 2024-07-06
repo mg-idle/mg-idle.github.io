@@ -1,6 +1,46 @@
 <script lang="ts">
 	import Meta from '$lib/components/meta.svelte';
 	import TreePalm from 'phosphor-svelte/lib/TreePalm';
+	import { player } from '$lib/data/player.svelte';
+
+	let isFighting = $state(false);
+	const tickDelay = 1000;
+	const enemyAttack = 1;
+	const enemyMaxHealth = 5;
+	let enemyHealth = $state(enemyMaxHealth);
+
+	$effect(() => {
+		let timeoutId: number;
+
+		if (enemyHealth <= 0) {
+			enemyHealth = enemyMaxHealth;
+			player.exp += 1;
+			player.health = player.maxHealth;
+		}
+
+		if (player.health <= 0) {
+			history.pushState({}, '', '/nexus');
+		}
+
+		if (isFighting) {
+			timeoutId = setTimeout(() => {
+				enemyHealth -= player.attack;
+				player.health -= enemyAttack;
+			}, tickDelay);
+		}
+
+		return () => clearTimeout(timeoutId);
+	});
+
+	$effect(() => {
+		console.log({
+			isFighting,
+			enemyHealth,
+			playerHealth: player.health,
+			playerAttack: player.attack,
+			playerExp: player.exp
+		});
+	});
 </script>
 
 <Meta title="Beach - Realm" />
@@ -23,8 +63,8 @@
 			<button
 				class="w-full cursor-pointer bg-amber-500 py-1 px-2 text-center text-lg text-amber-50 shadow-md"
 				onclick={() => {
-					console.log('yo');
-				}}>Fight!</button
+					isFighting = true;
+				}}>{!isFighting ? 'Fight!' : 'Stop'}</button
 			>
 		</div>
 	</section>
