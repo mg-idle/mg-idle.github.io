@@ -47,7 +47,7 @@
 
 <header class="w-full bg-amber-200 p-4 text-amber-950">
 	<h2 class="text-xl">
-		<TreePalm class="inline size-6" />
+		<TreePalm weight="duotone" class="inline size-6" />
 		<span>Beach</span>
 		<span class="text-base text-amber-900">(lvl 1-5)</span>
 	</h2>

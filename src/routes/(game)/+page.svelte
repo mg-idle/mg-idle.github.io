@@ -7,7 +7,7 @@
 
 <header class="w-full bg-sky-200 p-4 text-sky-950">
 	<h2 class="text-xl">
-		<CastleTurret class="inline size-6" />
+		<CastleTurret weight="duotone" class="inline size-6" />
 		<span>Nexus</span>
 	</h2>
 </header>

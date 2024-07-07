@@ -7,7 +7,7 @@
 
 <header class="w-full bg-sky-200 p-4 text-sky-950">
 	<h2 class="text-xl">
-		<TreasureChest class="inline size-6" />
+		<TreasureChest weight="duotone" class="inline size-6" />
 		<span>Vault</span>
 	</h2>
 </header>
