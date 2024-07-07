@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Meta from '$lib/components/meta.svelte';
 	import CastleTurret from 'phosphor-svelte/lib/CastleTurret';
-	import { base } from '$app/paths';
 </script>
 
 <Meta title="Nexus" />
@@ -21,7 +20,7 @@
 			<p class="text-emerald-900">Defeat 20 pirates!</p>
 			<a
 				class="block bg-emerald-500 py-1 px-2 text-center text-lg text-emerald-50 shadow-md"
-				href="{base}/realm/beach">Go to Beach!</a
+				href="/realm/beach">Go to Beach!</a
 			>
 		</div>
 	</section>

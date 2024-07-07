@@ -7,7 +7,6 @@
 	import TreePalm from 'phosphor-svelte/lib/TreePalm';
 	import { page } from '$app/stores';
 	import { vault } from '$lib/data/vault.svelte';
-	import { base } from '$app/paths';
 
 	const { children } = $props();
 </script>
@@ -20,21 +19,21 @@
 		<nav class="space-y-2">
 			<a
 				class="block w-full p-2 text-lg aria-[current=page]:bg-emerald-200 aria-[current=page]:font-medium aria-[current=page]:shadow-md"
-				href="{base}/"
+				href="/"
 				aria-current={$page.url.pathname === '/' ? 'page' : undefined}
 				><CastleTurret class="inline size-6" />
 				<span>Nexus</span></a
 			>
 			<a
 				class="block w-full p-2 text-lg aria-[current=page]:bg-emerald-200 aria-[current=page]:font-medium aria-[current=page]:shadow-md"
-				href="{base}/bazaar"
+				href="/bazaar"
 				aria-current={$page.url.pathname === '/bazaar' ? 'page' : undefined}
 				><Storefront class="inline size-6" />
 				<span>Bazaar</span></a
 			>
 			<a
 				class="block w-full p-2 text-lg aria-[current=page]:bg-emerald-200 aria-[current=page]:font-medium aria-[current=page]:shadow-md"
-				href="{base}/vault"
+				href="/vault"
 				aria-current={$page.url.pathname === '/vault' ? 'page' : undefined}
 				><TreasureChest class="inline size-6" />
 				<span>Vault</span>
@@ -48,7 +47,7 @@
 				>
 				<a
 					class="block w-full p-2 text-lg aria-[current=page]:bg-emerald-200 aria-[current=page]:font-medium aria-[current=page]:shadow-md"
-					href="{base}/realm/beach"
+					href="/realm/beach"
 					aria-current={$page.url.pathname === '/realm/beach' ? 'page' : undefined}
 					><TreePalm class="inline size-6" />
 					<span>Beach</span></a

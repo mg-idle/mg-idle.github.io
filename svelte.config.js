@@ -15,9 +15,6 @@ const config = {
 		adapter: adapter({
 			fallback: '404.html'
 		}),
-		paths: {
-			base: process.argv.includes('dev') ? '' : /** @type {`/${string}`} */ (process.env.BASE_PATH)
-		},
 		version: {
 			name: child_process.execSync('git rev-parse HEAD').toString().trim()
 		}
