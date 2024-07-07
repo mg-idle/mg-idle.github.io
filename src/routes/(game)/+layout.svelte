@@ -7,12 +7,13 @@
 	import TreePalm from 'phosphor-svelte/lib/TreePalm';
 	import { page } from '$app/stores';
 	import { vault } from '$lib/data/vault.svelte';
+	import { version } from '$app/environment';
 
 	const { children } = $props();
 </script>
 
 <div class="flex min-h-svh">
-	<div class="h-svh w-64 bg-emerald-100 p-2">
+	<div class="flex h-svh w-64 flex-col bg-emerald-100 p-2">
 		<h1 class="my-2 text-center text-2xl">
 			<CrownSimple weight="duotone" class="mr-2 inline size-8" /><span>MG Idle</span>
 		</h1>
@@ -54,6 +55,11 @@
 				>
 			</details>
 		</nav>
+		<footer class="mt-auto text-center text-sm text-emerald-900 underline underline-offset-2">
+			<a href="https://github.com/mg-idle/mg-idle.github.io/commit/{version}"
+				><span>{version.slice(0, 7)}</span></a
+			>
+		</footer>
 	</div>
 	<main class="flex-1">
 		{@render children()}
