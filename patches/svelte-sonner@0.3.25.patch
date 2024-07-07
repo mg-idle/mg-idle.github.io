@@ -1,0 +1,13 @@
+diff --git a/dist/Loader.svelte b/dist/Loader.svelte
+index a3f59946129b9ccec5c46c5db936abca14cc6d72..d7d7929a0f4368c0c876d7a082ecd4896db774b8 100644
+--- a/dist/Loader.svelte
++++ b/dist/Loader.svelte
+@@ -5,7 +5,7 @@ const bars = Array(12).fill(0);
+ <div class="sonner-loading-wrapper" data-visible={visible}>
+ 	<div class="sonner-spinner">
+ 		{#each bars as _, i (i)}
+-			<div class="sonner-loading-bar" />
++			<div class="sonner-loading-bar"></div>
+ 		{/each}
+ 	</div>
+ </div>

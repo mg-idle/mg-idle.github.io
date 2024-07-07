@@ -37,11 +37,17 @@
 		"prettier-plugin-tailwindcss": "^0.6.5",
 		"svelte": "^5.0.0-next.175",
 		"svelte-check": "^3.8.4",
+		"svelte-sonner": "^0.3.25",
 		"tailwindcss": "4.0.0-alpha.17",
 		"tslib": "^2.6.3",
 		"typescript": "^5.5.3",
 		"typescript-eslint": "^8.0.0-alpha.39",
 		"vite": "^5.3.3",
 		"vitest": "^1.6.0"
+	},
+	"pnpm": {
+		"patchedDependencies": {
+			"svelte-sonner@0.3.25": "patches/svelte-sonner@0.3.25.patch"
+		}
 	}
 }
