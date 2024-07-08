@@ -2,6 +2,7 @@
 	import Meta from '$lib/components/meta.svelte';
 	import TreePalm from 'phosphor-svelte/lib/TreePalm';
 	import { currentEnemy, enemies, zones, type EnemyType } from '$lib/data/enemies.svelte';
+	import PlayerStats from '$lib/components/game/player-stats.svelte';
 </script>
 
 <Meta title="Beach - Realm" />
@@ -13,6 +14,13 @@
 		<span class="text-base text-amber-900">(lvl 1-5)</span>
 	</h2>
 </header>
+
+<div class="p-4">
+	<section>
+		<h3 class="text-lg">Player</h3>
+		<PlayerStats />
+	</section>
+</div>
 
 <div class="p-4">
 	<section class="space-y-2">
