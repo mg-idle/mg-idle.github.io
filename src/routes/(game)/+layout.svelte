@@ -8,14 +8,12 @@
 	import { page } from '$app/stores';
 	import { vault } from '$lib/data/vault.svelte';
 	import { version } from '$app/environment';
-	import { currentEnemy } from '$lib/data/enemies.svelte';
-	import { player } from '$lib/data/player.svelte';
+	import { game } from '$lib/data/game.svelte';
 
 	const { children } = $props();
 
-	$inspect(currentEnemy);
-	$inspect(vault);
-	$inspect(player);
+	$inspect(game);
+	game.start();
 </script>
 
 <div class="flex min-h-svh">

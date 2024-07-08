@@ -1,44 +1,7 @@
 <script lang="ts">
 	import Meta from '$lib/components/meta.svelte';
 	import TreePalm from 'phosphor-svelte/lib/TreePalm';
-	import { player } from '$lib/data/player.svelte';
-	import { toast } from 'svelte-sonner';
-	import { goto } from '$app/navigation';
 	import { currentEnemy, enemies, zones, type EnemyType } from '$lib/data/enemies.svelte';
-
-	const tickDelay = 1000;
-
-	$effect(() => {
-		let timeoutId: number;
-
-		if (currentEnemy.health !== null && currentEnemy.health <= 0) {
-			currentEnemy.respawn();
-			player.gainExp(currentEnemy.enemy?.exp ?? 0);
-			player.regen();
-			toast.success(`You defeated the ${currentEnemy.enemy?.name}!`, {
-				description: `You gained ${currentEnemy.enemy?.exp ?? 0} exp.`
-			});
-		}
-
-		if (player.health <= 0) {
-			goto('/');
-			player.regen();
-			toast.error("You've been defeated!", {
-				description: 'You have been returned to the Nexus.'
-			});
-		}
-
-		if (currentEnemy.health) {
-			timeoutId = setTimeout(() => {
-				if (currentEnemy.health !== null && currentEnemy.enemy) {
-					currentEnemy.attack(player.attack);
-					player.takeDamage(currentEnemy.enemy.attack);
-				}
-			}, tickDelay);
-		}
-
-		return () => clearTimeout(timeoutId);
-	});
 </script>
 
 <Meta title="Beach - Realm" />
