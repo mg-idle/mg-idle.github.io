@@ -9,11 +9,12 @@
 	import { vault } from '$lib/data/vault.svelte';
 	import { version } from '$app/environment';
 	import { game } from '$lib/data/game.svelte';
+	import { untrack } from 'svelte';
 
 	const { children } = $props();
 
 	$inspect(game);
-	$effect.root(() => game.start());
+	$effect(() => untrack(() => game.start()));
 </script>
 
 <div class="flex min-h-svh">
