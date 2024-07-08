@@ -3,44 +3,19 @@
 	import TreePalm from 'phosphor-svelte/lib/TreePalm';
 	import { player } from '$lib/data/player.svelte';
 	import { toast } from 'svelte-sonner';
-	import { goto, pushState } from '$app/navigation';
+	import { goto } from '$app/navigation';
+	import { currentEnemy, enemies, zones, type EnemyType } from '$lib/data/enemies.svelte';
 
-	const enemies = {
-		crab: {
-			name: 'Crab',
-			attack: 1,
-			health: 3,
-			exp: 1
-		},
-		scorpion: {
-			name: 'Scorpion',
-			attack: 2,
-			health: 5,
-			exp: 2
-		},
-		pirate: {
-			name: 'Pirate',
-			attack: 5,
-			health: 10,
-			exp: 3
-		}
-	};
-
-	type EnemyType = keyof typeof enemies;
-
-	let fightingEnemy = $state<EnemyType | null>(null);
-	let enemyHealth = $state<number | null>(null);
 	const tickDelay = 1000;
 
 	$effect(() => {
 		let timeoutId: number;
-		let currentEnemy = fightingEnemy ? enemies[fightingEnemy] : null;
 
-		if (currentEnemy && enemyHealth !== null && enemyHealth <= 0) {
-			enemyHealth = currentEnemy?.health;
+		if (currentEnemy.health !== null && currentEnemy.health <= 0) {
+			currentEnemy.respawn();
 			player.exp += 1;
 			player.health = player.maxHealth;
-			toast.success(`You defeated the ${currentEnemy.name}!`);
+			toast.success(`You defeated the ${currentEnemy.enemy?.name}!`);
 		}
 
 		if (player.health <= 0) {
@@ -49,11 +24,11 @@
 			toast.error("You've been defeated!");
 		}
 
-		if (currentEnemy && enemyHealth) {
+		if (currentEnemy.health) {
 			timeoutId = setTimeout(() => {
-				if (enemyHealth !== null) {
-					enemyHealth -= player.attack;
-					player.health -= currentEnemy.attack;
+				if (currentEnemy.health !== null && currentEnemy.enemy) {
+					currentEnemy.attack(player.attack);
+					player.health -= currentEnemy.enemy.attack;
 				}
 			}, tickDelay);
 		}
@@ -63,8 +38,8 @@
 
 	$effect(() => {
 		console.log({
-			fightingEnemy,
-			enemyHealth,
+			fightingEnemy: currentEnemy.type,
+			enemyHealth: currentEnemy.health,
 			playerHealth: player.health,
 			playerAttack: player.attack,
 			playerExp: player.exp
@@ -86,7 +61,7 @@
 	<section class="space-y-2">
 		<h3 class="text-lg">Enemies</h3>
 		<div class="flex flex-wrap gap-4">
-			{#each Object.entries(enemies) as [enemyId, enemy] (enemyId)}
+			{#each Object.entries(enemies).filter(([, enemy]) => enemy.zone === zones.beach) as [enemyId, enemy] (enemyId)}
 				<div class="w-48 bg-amber-100 p-2 shadow-sm">
 					<h4 class="text-lg">{enemy.name}</h4>
 					<p class="text-amber-900">{enemy.attack} attack</p>
@@ -94,9 +69,12 @@
 					<button
 						class="w-full cursor-pointer bg-amber-500 py-1 px-2 text-center text-lg text-amber-50 shadow-md"
 						onclick={() => {
-							fightingEnemy = enemyId as EnemyType;
-							enemyHealth = enemies[enemyId as EnemyType].health;
-						}}>{fightingEnemy !== enemyId ? 'Fight!' : 'Stop'}</button
+							if (currentEnemy.type !== enemyId) {
+								currentEnemy.fightEnemy(enemyId as EnemyType);
+							} else {
+								currentEnemy.stopFighting();
+							}
+						}}>{currentEnemy.type !== enemyId ? 'Fight!' : 'Stop'}</button
 					>
 				</div>
 			{/each}
