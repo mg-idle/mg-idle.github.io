@@ -1,6 +1,11 @@
 <script lang="ts">
 	import Meta from '$lib/components/meta.svelte';
+	import { player } from '$lib/data/player.svelte';
 	import CastleTurret from 'phosphor-svelte/lib/CastleTurret';
+
+	$effect(() => {
+		player.regen();
+	});
 </script>
 
 <Meta title="Nexus" />

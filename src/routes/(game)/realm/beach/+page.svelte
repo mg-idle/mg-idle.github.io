@@ -13,37 +13,31 @@
 
 		if (currentEnemy.health !== null && currentEnemy.health <= 0) {
 			currentEnemy.respawn();
-			player.exp += 1;
-			player.health = player.maxHealth;
-			toast.success(`You defeated the ${currentEnemy.enemy?.name}!`);
+			player.gainExp(currentEnemy.enemy?.exp ?? 0);
+			player.regen();
+			toast.success(`You defeated the ${currentEnemy.enemy?.name}!`, {
+				description: `You gained ${currentEnemy.enemy?.exp ?? 0} exp.`
+			});
 		}
 
 		if (player.health <= 0) {
 			goto('/');
-			player.health = player.maxHealth;
-			toast.error("You've been defeated!");
+			player.regen();
+			toast.error("You've been defeated!", {
+				description: 'You have been returned to the Nexus.'
+			});
 		}
 
 		if (currentEnemy.health) {
 			timeoutId = setTimeout(() => {
 				if (currentEnemy.health !== null && currentEnemy.enemy) {
 					currentEnemy.attack(player.attack);
-					player.health -= currentEnemy.enemy.attack;
+					player.takeDamage(currentEnemy.enemy.attack);
 				}
 			}, tickDelay);
 		}
 
 		return () => clearTimeout(timeoutId);
-	});
-
-	$effect(() => {
-		console.log({
-			fightingEnemy: currentEnemy.type,
-			enemyHealth: currentEnemy.health,
-			playerHealth: player.health,
-			playerAttack: player.attack,
-			playerExp: player.exp
-		});
 	});
 </script>
 
