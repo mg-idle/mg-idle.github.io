@@ -13,7 +13,7 @@
 	const { children } = $props();
 
 	$inspect(game);
-	game.start();
+	$effect.root(() => game.start());
 </script>
 
 <div class="flex min-h-svh">

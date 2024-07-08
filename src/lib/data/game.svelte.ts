@@ -11,6 +11,11 @@ export const game = {
 	player,
 	currentEnemy,
 	tick() {
+		if (currentEnemy.health && currentEnemy.enemy) {
+			currentEnemy.attack(player.attack);
+			player.takeDamage(currentEnemy.enemy.attack);
+		}
+
 		if (currentEnemy.health !== null && currentEnemy.health <= 0) {
 			currentEnemy.respawn();
 			player.gainExp(currentEnemy.enemy?.exp ?? 0);
@@ -27,14 +32,11 @@ export const game = {
 				description: 'You have been returned to the Nexus.'
 			});
 		}
-
-		if (currentEnemy.health && currentEnemy.enemy) {
-			currentEnemy.attack(player.attack);
-			player.takeDamage(currentEnemy.enemy.attack);
-		}
 	},
 	start() {
 		this.tick();
-		setInterval(() => this.tick(), tickDelay);
+		const intervalId = setInterval(() => this.tick(), tickDelay);
+
+		return () => clearInterval(intervalId);
 	}
 };
